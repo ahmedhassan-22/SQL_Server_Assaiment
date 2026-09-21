@@ -1,0 +1,55 @@
+create table Emp
+(ESSN int primary key, Efname varchar(20),Elname varchar(20),
+EBDate int,EAddress varchar(40),Sex varchar(20),
+salary float,superssn int references Emp(Essn),
+Did int
+)
+
+CREATE TABLE Dept 
+(
+    Dname VARCHAR(20),
+    Did INT PRIMARY KEY,
+    MGRssn INT REFERENCES Emp(ESSN),
+    MgrStartDate INT
+)
+ALTER TABLE Emp
+ADD CONSTRAINT FK_Emp_Dept
+FOREIGN KEY (Did) REFERENCES Dept(Did)
+
+CREATE TABLE DEPT_LOCATIONS 
+(
+    Did INT,
+    DLOCATION VARCHAR(30),
+    PRIMARY KEY (Did, DLOCATION),
+    FOREIGN KEY (Did) REFERENCES dept(Did)
+)
+
+CREATE TABLE PROJECT 
+(
+    PNAME VARCHAR(20),
+    Pid INT PRIMARY KEY,
+    PLOCATION VARCHAR(30),
+    Did INT,
+    FOREIGN KEY (Did) REFERENCES DEPT(Did)
+)
+
+CREATE TABLE WORKS_ON 
+(
+    ESSN INT,
+    Pid INT,
+    PHOURS FLOAT,
+    PRIMARY KEY (ESSN, Pid),
+    FOREIGN KEY (ESSN) REFERENCES EMP(ESSN),
+    FOREIGN KEY (Pid) REFERENCES PROJECT(Pid)
+)
+
+CREATE TABLE DEPENDENT 
+(
+    ESSN INT,
+    DEPENDENT_NAME VARCHAR(20),
+    SEX VARCHAR(10),
+    BDATE INT,
+    RELATIONSHIP VARCHAR(20),
+    PRIMARY KEY (ESSN, DEPENDENT_NAME),
+    FOREIGN KEY (ESSN) REFERENCES EMP(ESSN)
+)
